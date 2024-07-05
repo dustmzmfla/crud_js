@@ -51,11 +51,16 @@
 }
 
 .wrapper .content .btns button.cancle {
-    border: 1px solid #E82F3D;
-    color: #E82F3D;
+    border: 1px solid #b7b7b7;
+    color: #b7b7b7;
 }
 
 .wrapper .content .btns button.save {
     background-color: green;
     border: 1px solid green;
+}
+
+.wrapper .content .btns button.delete {
+    background-color: #E82F3D;
+    border: 1px solid #E82F3D;
 }
