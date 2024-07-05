@@ -6,6 +6,7 @@ function save(e){
             <textarea placeholder="메모">${text}</textarea>
             
             <div class="btns">
+                <button class="edit" onclick="edit(event);">수정</button>
                 <button class="delete" onclick="contentDelete(event);">삭제</button>
             </div>
         </div>

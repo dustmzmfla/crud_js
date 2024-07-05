@@ -64,3 +64,8 @@
     background-color: #E82F3D;
     border: 1px solid #E82F3D;
 }
+
+.wrapper .content .btns button.edit {
+    background-color: #FFAD00;
+    border: 1px solid #FFAD00;
+}
