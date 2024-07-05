@@ -15,7 +15,8 @@ function save(e){
         alert('fail');
         return false;
     }else {
-        $('.wrapper').append(textContent);
+        $(e.target).parent().siblings().val("");
+        $('.content:first-child').after(textContent);
     }
 }
 
