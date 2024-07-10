@@ -1,17 +1,16 @@
-const memoArr = [];
+let memoData = '';
 
-if ( localStorage.length > 0) {
-    for(let i=0; localStorage.length > i; i++) {
-        const memoData = JSON.parse(localStorage.getItem('data' + (i + 1)));
-        memoArr.push(memoData);
-    }
-    memoArr.forEach((e)=>{
-        write(e);
-    });
+for (let i = 0; localStorage.length > i; i++) {
+    const textData = JSON.parse(localStorage.getItem('data' + (i + 1))).text;
+    const keyData = JSON.parse(localStorage.getItem('data' + (i + 1))).keyVal;
+    const send = { text: textData, keyVal: keyData }
+
+    write(send);
 }
 
 function resetStorage(e){
-    localStorage.clear(e);
+    localStorage.clear();
+    location.reload();
 }
 
 function reset(e) { $(e.target).parent().siblings().val(''); };
@@ -19,7 +18,7 @@ function reset(e) { $(e.target).parent().siblings().val(''); };
 function write(e){
     $('.content:first-child').after(
         `
-            <div class="content" data-tab="data` + e.keyVal + `">
+            <div class="content" id="data` + e.keyVal + `">
                 <textarea placeholder="메모">` + e.text + `</textarea>
                 
                 <div class="btns">
@@ -31,10 +30,45 @@ function write(e){
     );
 };
 
+
+const memoArr = [];
+
 function contentDelete(e){
-    const dataKey = ($(e.target).parents('.content').attr('data-tab'));
-    $(e.target).parents('.content').remove();
+    if ( $('.content').length == 2 ) {
+        localStorage.clear();
+    }
+
+    let count = 0;
+    
+    const dataKey = $(e.target).parents('.content').attr('id');
     localStorage.removeItem(dataKey);
+    $(e.target).parents('.content').remove();
+    
+    // for(let i=0; localStorage.length + 1 > i; i++) {
+    //     let memoData = JSON.parse(localStorage.getItem('data' + (i + 1)));
+    //     if ( memoData !== null) {
+    //         const newArr = { text: memoData.text, keyVal: (i + 1) };
+    //         memoArr.push(newArr);
+    //     }
+    // }
+    
+    // localStorage.clear();
+    // memoArr.forEach((el)=>{
+    //     count++;
+    //     localStorage.setItem('data' + count, JSON.stringify(el));
+    // });
+
+    // location.reload();
+
+    console.log(localStorage)
+}
+
+function edit(e){
+    const text = $(e.target).parent().siblings().val();
+    const dataKey = ($(e.target).parents('.content').attr('id'));
+    let cut = parseInt(dataKey.replace('data', ""));
+    const send = { text: text, keyVal: cut }
+    localStorage.setItem(dataKey , JSON.stringify(send));
 }
 
 function save(e){
@@ -46,7 +80,6 @@ function save(e){
     }else {
         let dataLength = localStorage.length + 1;
         const send = { text: text, keyVal: dataLength }
-        memoArr.push(send);
         localStorage.setItem('data' + dataLength , JSON.stringify(send));
         write(send);
         reset(e);
