@@ -1,10 +1,5 @@
 const memoArr = [];
 
-function resetStorage(e){
-    localStorage.clear();
-    location.reload();
-}
-
 if (localStorage.length > 0) {
     for(let i = 0; localStorage.length > i; i++) {
         let getData = JSON.stringify(localStorage.key((i)));
@@ -43,8 +38,6 @@ function write(e){
 
 function reset(e){ $(e.target).parent().siblings().val(""); }
 
-
-
 function save(e){
     let newDate = new Date();
     let year = String(newDate.getFullYear());
@@ -72,6 +65,7 @@ function edit(e){
     let getData = $(e.target).parents('.content').attr('data-tab');
     let getText = $(e.target).parent().siblings().val();
     JSON.stringify(localStorage.setItem(getData, getText));
+    location.reload();
 }
 
 function remove(e){
