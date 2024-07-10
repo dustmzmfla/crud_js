@@ -1,5 +1,3 @@
-let count = 0;
-
 function resetStorage(e){
     localStorage.clear();
     location.reload();
@@ -14,7 +12,6 @@ if (localStorage.length > 0) {
         const sendData = { key: getKey, text: getText };
         write(sendData)
     }
-
 }
 
 function write(e){
