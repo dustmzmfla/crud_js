@@ -26,16 +26,6 @@ function organize(){
 }
 organize();
 
-// const testArr = [
-//     { num: 1, text: 1},
-//     { num: 3, text: 3},
-//     { num: 2, text: 2},
-//     { num: 5, text: 5}
-// ];
-// testArr.sort((a, b) => a.num - b.num );
-
-// console.log(testArr)
-
 function write(e){
     $('.content:first-child').after(
         `
