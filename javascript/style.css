@@ -35,7 +35,6 @@
     display: flex;
     justify-content: end;
     gap: 6px;
-    padding: 0 12px;
     align-items: center;
     height: 50px;
 }
@@ -68,4 +67,17 @@
 .wrapper .content .btns button.edit {
     background-color: #FFAD00;
     border: 1px solid #FFAD00;
+}
+
+footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 12px;
+    border-top: 1px solid #eee;
+}
+
+footer .date {
+    font-size: 14px;
+    color: #555;
 }
