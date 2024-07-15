@@ -74,6 +74,8 @@
 //     location.reload();
 // }
 
+//테스트
+
 document.querySelector('.save').addEventListener('click',function(){
     let memo = this.parentNode.previousSibling.previousSibling.value;
     let newDate = new Date();
