@@ -95,15 +95,15 @@ document.querySelector('.save').addEventListener('click',function(){
     }else {
         document.querySelector('.wrapper').insertAdjacentHTML('beforeend',
             `<div class="content">
-                <textarea placeholder="메모" onfocus="onFocus(event);">${memo}</textarea>
+                <textarea placeholder="메모" oninput="textChange(event);" onfocus="onFocus(event);">${memo}</textarea>
                 
                 <footer>
-                <div class="date">${format}</div>
+                    <div class="date">${format}</div>
 
-                <div class="btns">
-                    <button class="edit" disabled>수정</button>
-                    <button class="delete" onclick="remove();">삭제</button>
-                </div>
+                    <div class="btns">
+                        <button class="edit" onclick="editMemo(event);" disabled="disabled">수정</button>
+                        <button class="delete" onclick="remove(event);">삭제</button>
+                    </div>
                 </footer>
             </div>`
         );
