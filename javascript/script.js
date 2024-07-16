@@ -43,14 +43,17 @@ const remove = (e) => {
                 memoArr.splice(i, 1);
             }
         }
+
+        e.target.parentNode.parentNode.parentNode.remove();
     
         localStorage.clear();
         localStorage.setItem('memo', JSON.stringify(memoArr));
 
-        location.reload();
+
     }else {
         return false;
     }
+   
 }
 
 const textChange = (e) => {
