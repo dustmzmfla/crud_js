@@ -29,11 +29,11 @@ document.querySelector('.cancle').addEventListener('click', function(){
     this.parentNode.parentNode.previousSibling.previousSibling.value = '';
 });
 
-
 let previousMemo = '';
 let nextMemo = '';
 
-function remove(e){
+const remove = (e) => {
+
     const alarm = confirm('삭제하시겠습니까?');
     if (alarm) {
         previousMemo = e.target.parentNode.parentNode.previousElementSibling.value;
@@ -53,7 +53,7 @@ function remove(e){
     }
 }
 
-function textChange(e){
+const textChange = (e) => {
     nextMemo = e.target.value;
     
     if ( previousMemo !== nextMemo ) {
@@ -63,7 +63,7 @@ function textChange(e){
     }
 }
 
-function editMemo(e){
+const editMemo = (e) => {
     nextMemo = e.target.parentNode.parentNode.previousElementSibling.value;
     if ( previousMemo !== nextMemo ) {
         memo = nextMemo;
@@ -82,7 +82,7 @@ function editMemo(e){
     e.target.disabled = true;
 }
 
-function onFocus(e){
+const onFocus = (e) => {
     previousMemo = e.target.value;
 }
 
