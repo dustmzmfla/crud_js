@@ -37,9 +37,12 @@
     gap: 6px;
     align-items: center;
     height: 50px;
+    margin: 0 0 0 auto;
 }
 
 .wrapper .content .btns button {
+    position: relative;
+    transition: all 0.25s;
     border: 0;
     color: #fff;
     padding: 3px 15px;
@@ -67,6 +70,12 @@
 .wrapper .content .btns button.edit {
     background-color: #FFAD00;
     border: 1px solid #FFAD00;
+}
+
+.wrapper .content .btns button:disabled {
+    background-color: #ddd;
+    border: 1px solid #ddd;
+    cursor: no-drop;
 }
 
 footer {
