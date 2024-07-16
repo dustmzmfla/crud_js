@@ -81,7 +81,6 @@ let newDate = new Date();
 let year = newDate.getFullYear();
 let month = newDate.getMonth() + 1;
 let date = newDate.getDate();
-
 let format = year + "-" + (("00" + month.toString()).slice(-2)) + "-" + (("00" + date.toString()).slice(-2));
 
 if ( memoArr.length > 0 ) {
@@ -95,7 +94,7 @@ if ( memoArr.length > 0 ) {
 
                 <div class="btns">
                     <button class="edit" onclick="editMemo(event);" disabled="disabled">수정</button>
-                    <button class="delete" onclick="remove();">삭제</button>
+                    <button class="delete" onclick="remove(event);">삭제</button>
                 </div>
                 </footer>
             </div>`
@@ -107,13 +106,29 @@ document.querySelector('.cancle').addEventListener('click', function(){
     this.parentNode.parentNode.previousSibling.previousSibling.value = '';
 });
 
-function remove(){
-    
-}
 
 let previousMemo = '';
 let nextMemo = '';
 
+function remove(e){
+    const alarm = confirm('삭제하시겠습니까?');
+    if (alarm) {
+        previousMemo = e.target.parentNode.parentNode.previousElementSibling.value;
+    
+        for ( let i = 0; memoArr.length > i; i++ ) {
+            if ( memoArr[i].memo == previousMemo ) {
+                memoArr.splice(i, 1);
+            }
+        }
+    
+        localStorage.clear();
+        localStorage.setItem('memo', JSON.stringify(memoArr));
+
+        location.reload();
+    }else {
+        return false;
+    }
+}
 
 function textChange(e){
     nextMemo = e.target.value;
@@ -128,12 +143,14 @@ function textChange(e){
 function editMemo(e){
     nextMemo = e.target.parentNode.parentNode.previousElementSibling.value;
     if ( previousMemo !== nextMemo ) {
-        memo = nextMemo
+        memo = nextMemo;
+
         for ( let i = 0; memoArr.length > i; i++ ) {
             if ( memoArr[i].memo == previousMemo ) {
                 memoArr.splice(i, 1, {memo, format});
             }
         }
+
         localStorage.clear();
         localStorage.setItem('memo', JSON.stringify(memoArr));
     }else {
