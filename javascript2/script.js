@@ -3,44 +3,39 @@ const textAreas = document.querySelectorAll('textarea');
 const cancelBtn = document.querySelector('.cancel');
 let dataArr = [];
 let count = 0;
-
-const date = new Date();
-const padStr = (value) => value < 10 ? '0' + value : value;
-const padStr2 = (value) => value.toString().padStart(2, '0');
-
-const getNow = (format = '-') => {
-	return [
-    date.getFullYear(),
-    padStr(date.getMonth()),
-    padStr2(date.getDate())
-  ].join(format);
-}
-
-const date1 = getNow();
+let today;
 
 let functions = {
   list : () => {
     // localStorage.clear();
     // console.log(localStorage);
-
+    
     functions.getDate();
+    for (let i=0; i < localStorage.length; i++) {
+      dataArr[i] = localStorage.getItem('memo' + i);
+      functions.templates(dataArr[i]);
+      count = i + 1;
+    }
+
   },
 
   getDate : () => {
     const date = new Date();
-    const padStr = (value) => value < 10 ? '0' + value : value;
+    const year = date.toLocaleDateString('en-US', { year: "numeric" });
+    const month = date.toLocaleDateString('en-US', { month: "2-digit" });
+    const day = date.toLocaleDateString('en-US', { day: "2-digit" });
+    today = String(year) + String(month) + String(day);
   },
   
   save : (e) => {
     if ( textAreas[0].value !== '' ) {
-      dataArr[count] = textAreas[0].value;
+      dataArr[count] = { 'key' : 'memo' + (count) , 'text' : textAreas[0].value, 'date' : today}
       count ++;
-      functions.templates(textAreas[0].value, count);
+      functions.templates(textAreas[0].value, today);
       functions.empty();
-      // localStorage.clear();
 
       dataArr.forEach((el, idx)=>{
-        localStorage.setItem('memo' + idx, el);
+        localStorage.setItem('data', el);
       });
 
     }else {
