@@ -4,18 +4,18 @@ const cancelBtn = document.querySelector('.cancel');
 let dataArr = [];
 let count = 0;
 let today;
+let changeDate;
+let reverse = [];
 
 let functions = {
   list : () => {
     // localStorage.clear();
     // console.log(localStorage);
-    
-    functions.getDate();
-    for (let i=0; i < localStorage.length; i++) {
-      dataArr[i] = localStorage.getItem('memo' + i);
-      functions.templates(dataArr[i]);
-      count = i + 1;
-    }
+    // for (let i=0; i < localStorage.length; i++) {
+    //   dataArr[i] = localStorage.getItem('memo' + i);
+    //   functions.templates(dataArr[i]);
+    //   count = i + 1;
+    // }
 
   },
 
@@ -27,16 +27,24 @@ let functions = {
     today = String(year) + String(month) + String(day);
   },
   
-  save : (e) => {
+  save : () => {
+    functions.getDate();
+
     if ( textAreas[0].value !== '' ) {
-      dataArr[count] = { 'key' : 'memo' + (count) , 'text' : textAreas[0].value, 'date' : today}
-      count ++;
-      functions.templates(textAreas[0].value, today);
+      dataArr.push({
+        text : textAreas[0].value,
+        date : today
+      });
+      
+      reverse = [...dataArr].reverse();
+      // dataArr[count] = { 'key' : 'memo' + (count) , 'text' : textAreas[0].value, 'date' : today}
+      // count ++;
+      functions.template(reverse);
       functions.empty();
 
-      dataArr.forEach((el, idx)=>{
-        localStorage.setItem('data', el);
-      });
+      // dataArr.forEach((el, idx)=>{
+      //   localStorage.setItem('data', el);
+      // });
 
     }else {
       alert('빈칸');
@@ -58,21 +66,24 @@ let functions = {
     e.target.value !== '' ? cancelBtn.classList.add('show') : cancelBtn.classList.remove('show');
   },
 
-  templates : (el, num) => {
-    document.querySelector('.wrapper').insertAdjacentHTML('beforeEnd',
-    `<div class="content">
-      <textarea placeholder="메모" oninput="textChange(event);" onfocus="onFocus(event);">${el}</textarea>
+  template : (el) => {
+    el.forEach((i)=>{
+      document.querySelector('.wrapper').insertAdjacentHTML('beforeEnd',
+      `<div class="content">
+        <textarea placeholder="메모" oninput="textChange(event);">${i.text}</textarea>
           
-      <footer>
-        <div class="date">${num}</div>
-
-        <div class="btns">
-          <button class="edit" onclick="editMemo(event);" disabled="disabled">수정</button>
-          <button class="delete" onclick="remove(event);">삭제</button>
-        </div>
-      </footer>
-    </div>`)
-  }
+        <footer>
+          <div class="date">${i.date}</div>
+  
+          <div class="btns">
+            <button class="edit" disabled="disabled">수정</button>
+            <button class="delete">삭제</button>
+          </div>
+        </footer>
+      </div>`
+      );
+    });
+  },
 }
 
 functions.list();
