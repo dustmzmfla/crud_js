@@ -14,6 +14,7 @@ let functions = {
     if ( localStorage.length > 0 ) {
       datas = JSON.parse(localStorage.getItem('data'));
       functions.template(datas);
+      dataArr = datas;
       count = Number(datas[0].key.split('memo')[1]) + 1;
     }
   },
