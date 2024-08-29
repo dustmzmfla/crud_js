@@ -1,22 +1,21 @@
-let now;
-const textAreas = document.querySelectorAll('textarea');
+
+const textArea = document.querySelector('#mainText');
 const cancelBtn = document.querySelector('.cancel');
 let dataArr = [];
-let count = 0;
 let today;
 let changeDate;
-let reverse = [];
+let addContents;
+let count = 0;
+let datas;
 
 let functions = {
   list : () => {
     // localStorage.clear();
-    // console.log(localStorage);
-    // for (let i=0; i < localStorage.length; i++) {
-    //   dataArr[i] = localStorage.getItem('memo' + i);
-    //   functions.templates(dataArr[i]);
-    //   count = i + 1;
-    // }
-
+    if ( localStorage.length > 0 ) {
+      datas = JSON.parse(localStorage.getItem('data'));
+      functions.template(datas);
+      count = Number(datas[0].key.split('memo')[1]) + 1;
+    }
   },
 
   getDate : () => {
@@ -30,21 +29,18 @@ let functions = {
   save : () => {
     functions.getDate();
 
-    if ( textAreas[0].value !== '' ) {
-      dataArr.push({
-        text : textAreas[0].value,
+    if ( textArea.value !== '' ) {
+      dataArr.unshift({
+        key : 'memo' + count,
+        text : textArea.value,
         date : today
       });
-      
-      reverse = [...dataArr].reverse();
-      // dataArr[count] = { 'key' : 'memo' + (count) , 'text' : textAreas[0].value, 'date' : today}
-      // count ++;
-      functions.template(reverse);
-      functions.empty();
 
-      // dataArr.forEach((el, idx)=>{
-      //   localStorage.setItem('data', el);
-      // });
+      functions.template(dataArr);
+      functions.empty();
+      
+      localStorage.setItem('data', JSON.stringify(dataArr));
+      count++;
 
     }else {
       alert('빈칸');
@@ -53,7 +49,7 @@ let functions = {
   },
 
   empty : () => {
-    textAreas[0].value = '';
+    textArea.value = '';
     cancelBtn.classList.remove('show');
   },
 
@@ -66,14 +62,26 @@ let functions = {
     e.target.value !== '' ? cancelBtn.classList.add('show') : cancelBtn.classList.remove('show');
   },
 
+  left : () => {
+    addContents = document.querySelectorAll('.added');
+    
+    if ( addContents.length > 0 ) {
+      for (let i=0; i < addContents.length; i++ ) {
+        addContents[i].remove();
+      }
+    }
+  },
+
   template : (el) => {
+    functions.left();
     el.forEach((i)=>{
+      changeDate = i.date.slice(0,4) + '-' + i.date.slice(4,6) + '-' + i.date.slice(6,8);
       document.querySelector('.wrapper').insertAdjacentHTML('beforeEnd',
-      `<div class="content">
+      `<div class="content added">
         <textarea placeholder="메모" oninput="textChange(event);">${i.text}</textarea>
           
         <footer>
-          <div class="date">${i.date}</div>
+          <div class="date">${changeDate}</div>
   
           <div class="btns">
             <button class="edit" disabled="disabled">수정</button>
